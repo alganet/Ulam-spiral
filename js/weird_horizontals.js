@@ -83,8 +83,9 @@
                         var pointToDraw = {};
                         var mu = mobiusFunc(i);
                         var mainF = (Math.sqrt(Math.sqrt(i) / Math.PI));
-                        var alpha = ( radius / mainF / Math.PI ) * Math.sqrt(point.y);
-                        var rads =  ( radius * mainF / Math.PI ) / Math.sqrt(point.x);
+                        var alpha = ( radius / mainF / Math.PI ) * Math.pow(point.y, point.x);
+                        //var alpha = ( radius / mainF / Math.PI ) * Math.sqrt(point.y);
+                        var rads =  ( radius * mainF / Math.PI );
                         if (mu[1] === -1) {      // red odd unique factors
                             pointToDraw = {
                                 x : point.x,

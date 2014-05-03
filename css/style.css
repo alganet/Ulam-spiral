@@ -1,7 +1,11 @@
 body {
-	padding-top: 60px;
 	padding-bottom: 40px;
 	background-color: #f9f9f9;
+}
+
+canvas {
+	border: 2px solid black;
+	width: 100%;
 }
 
 @media (max-width: 980px) {
