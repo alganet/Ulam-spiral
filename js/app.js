@@ -63,6 +63,12 @@
         var generate = function() {
             var directionSteps = 1;
             var directionIndex = 0;
+            var seqs = {
+                yellow: [],
+                cyan:   [],
+                pink:   [],
+                white:  []
+            };
             //var i = 1;
             var i = num;
             drawPoint({
@@ -82,9 +88,15 @@
 
                         var pointToDraw = {};
                         var mu = mobiusFunc(i);
-                        var mainF = (Math.sqrt(Math.sqrt(i) / Math.PI));
-                        var alpha = ( radius / mainF / Math.PI ) * Math.sqrt(point.y);
-                        var rads =  ( radius * mainF / Math.PI ) / Math.sqrt(point.x);
+                        var mainF = (Math.sqrt(Math.sqrt(i)));
+                        var alpha = ( 10 / mainF ) * Math.sqrt(point.y) / Math.sqrt(point.x);
+                        var rads = 5;//(mainF / Math.sqrt(point.y / Math.sqrt(point.x)));
+
+                            alpha = 0.5;
+                        if (mu[0].length == 1) {  // primes
+                            alpha = 1;
+                        }
+
                         if (mu[1] === -1) {      // red odd unique factors
                             pointToDraw = {
                                 x : point.x,
@@ -107,12 +119,33 @@
                                 color : 'rgba(0, 255, 0, '+ alpha +')',
                                 radius : rads
                             };
-                        }
-                        if (mu[0].length == 1) {  // primes
-                            pointToDraw.color  = 'rgba(255, 255, 255, 1)';
-                            pointToDraw.radius = rads
-                        }
+                        } 
                         drawPoint(pointToDraw);
+
+                        var dirPoint = {
+                            x : point.x,
+                            y : point.y,
+                            radius : rads * 0.6
+                        };
+
+                        if (mu[1] === direction[directionIndex].x) {
+                            dirPoint.color = 'rgba(0, 255, 255, '+ alpha +')';
+                            drawPoint(dirPoint);
+                            //seqs.cyan.push(i);
+                        } else if (mu[1] === -1 * direction[directionIndex].x) {
+                            dirPoint.color ='rgba(255, 255, 0, '+ alpha +')';
+                            drawPoint(dirPoint);
+                            //seqs.yellow.push(i);
+                        }  else if (mu[1] === direction[directionIndex].y) {
+                            dirPoint.color = 'rgba(255, 0, 255, '+ alpha +')';
+                            drawPoint(dirPoint);
+                            //seqs.cyan.push(i);
+                        } else if (mu[1] === -1 * direction[directionIndex].y) {
+                            dirPoint.color ='rgba(255, 255, 255, '+ alpha +')';
+                            drawPoint(dirPoint);
+                            //seqs.yellow.push(i);
+                        } 
+
 
                         if (i >= (radiusPow)) {
                             cont = false;
