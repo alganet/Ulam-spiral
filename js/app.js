@@ -1,7 +1,7 @@
 "use strict";
 
 (function(win, doc, nav) {
-    var canvas, context, width, height, num, size, resolution;
+    var canvas, context, width, height, num, size, resolution, divisor;
     var Spiral = function() {
         var radius = (resolution / 2) || 6;
         var radiusPow = Math.pow(width / radius, 2);
@@ -69,46 +69,56 @@
                 pink:   [],
                 white:  []
             };
-            //var i = 1;
             var i = num;
             drawPoint({
                 x : point.x,
                 y : point.y,
-                color : '#000',
-                radius : halfRadius
+                color : 'rgba(255, 255, 255, 0.25)',
+                radius : 8
             });
             var cont = true;
-            var t0 = new Date().getTime();
             do {
                 for (var k = 0; k < 2; k++) {
                     for (var ds = 0; ds < directionSteps; ds += 1) {
-                        i += 1;
+                        i = i+1/divisor;
+                        var floorI = Math.floor(i);
                         //increment number
                         point = setDirection(point, directionIndex);
 
                         var pointToDraw = {};
-                        var mu = mobiusFunc(i);
-                        var mainF = (Math.sqrt(Math.sqrt(i)));
-                        var alpha = ( 10 / mainF ) * Math.sqrt(point.y) / Math.sqrt(point.x);
-                        var rads = 5;//(mainF / Math.sqrt(point.y / Math.sqrt(point.x)));
-
-                            alpha = 0.5;
-                        if (mu[0].length == 1) {  // primes
-                            alpha = 1;
+                        var mu = mobiusFunc(floorI);
+                        //var mainF = (Math.sqrt(Math.sqrt(i)));
+                        var alpha = 1;//( 1 / mainF );
+                        var rads = 6;//mainF;
+                        if (radiusP) {
+                            rads = Math.sqrt(floorI) / Math.sqrt(canvasS/Math.PI);
                         }
 
-                        if (mu[1] === -1) {      // red odd unique factors
+                        if (alphaP) {
+                            alpha = 1 / (Math.sqrt(floorI) / Math.sqrt(canvasS*Math.PI))
+                        }
+
+                        if (mu[0].length == 1) {  // one factor
+                            if (parseInt(i) === floorI) { // prime
+                                pointToDraw = {
+                                    x : point.x,
+                                    y : point.y,
+                                    color : 'rgba(0, 0, 0, '+ alpha +')',
+                                    radius : rads
+                                };
+                            }
+                        } else if (mu[1] === -1) {  // red odd unique factors
                             pointToDraw = {
                                 x : point.x,
                                 y : point.y,
-                                color : 'rgba(255, 0, 0, '+ alpha +')',
+                                color : 'rgba(255, 50, 50, '+ alpha +')',
                                 radius : rads
                             };
                         } else if (mu[1] === 1) { // blue even unique factors
                             pointToDraw = {
                                 x : point.x,
                                 y : point.y,
-                                color : 'rgba(0, 0, 255, '+ alpha +')',
+                                color : 'rgba(50, 50, 255, '+ alpha +')',
                                 radius : rads
                             };
 
@@ -116,47 +126,21 @@
                             pointToDraw = {
                                 x : point.x,
                                 y : point.y,
-                                color : 'rgba(0, 255, 0, '+ alpha +')',
+                                color : 'rgba(50, 255, 50, '+ alpha +')',
                                 radius : rads
                             };
                         } 
                         drawPoint(pointToDraw);
-
-                        var dirPoint = {
-                            x : point.x,
-                            y : point.y,
-                            radius : rads * 0.6
-                        };
-
-                        if (mu[1] === direction[directionIndex].x) {
-                            dirPoint.color = 'rgba(0, 255, 255, '+ alpha +')';
-                            drawPoint(dirPoint);
-                            //seqs.cyan.push(i);
-                        } else if (mu[1] === -1 * direction[directionIndex].x) {
-                            dirPoint.color ='rgba(255, 255, 0, '+ alpha +')';
-                            drawPoint(dirPoint);
-                            //seqs.yellow.push(i);
-                        }  else if (mu[1] === direction[directionIndex].y) {
-                            dirPoint.color = 'rgba(255, 0, 255, '+ alpha +')';
-                            drawPoint(dirPoint);
-                            //seqs.cyan.push(i);
-                        } else if (mu[1] === -1 * direction[directionIndex].y) {
-                            dirPoint.color ='rgba(255, 255, 255, '+ alpha +')';
-                            drawPoint(dirPoint);
-                            //seqs.yellow.push(i);
-                        } 
-
+ 
 
                         if (i >= (radiusPow)) {
                             cont = false;
-                            return (new Date().getTime()) - t0;
                         }
                     }
                     directionIndex = nextDirection(directionIndex);
                 }
                 directionSteps += 1;
             } while (cont) ;
-            return (new Date().getTime()) - t0;
         }
         return {
             generate : generate
@@ -167,52 +151,96 @@
 
 
     //generate
-    var generate = function() {
+    var generate = function(init, divi) {
         try {
-            document.getElementById('canvas').setAttribute('style', 'width: 100%');
-            num = 1;
-            var canvasSize = Math.floor(Math.sqrt(parseInt(document.getElementById('canvasSize').value, 10)));
-            resolution = 12;
-            var realCanvas = doc.getElementById("canvas");
-            canvas = document.createElement('canvas');
-            canvas.width = (canvasSize * resolution);
-            canvas.height = canvas.width;
-            width = parseInt(canvas.width, 10);
-            height = parseInt(canvas.height, 10)
-            context = canvas.getContext("2d");
+            divisor = divi || 1;
+            num = (init || 1)/divisor;
+            context.save();
+            context.setTransform(1, 0, 0, 1, 0, 0);
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.restore();
             context.rect(0, 0, width, height);
             context.fillStyle = '#000';
             context.fill();
             var spiral = new Spiral();
-            realCanvas.width  = canvas.width;
-            realCanvas.height = canvas.height;
-            document.getElementById('generateButton').innerHTML = spiral.generate();
-            realCanvas.getContext("2d").drawImage(canvas, 0, 0);
+            spiral.generate();
         } catch(e) {
             console.log(e);
         }
 
     }
-    window.onload = function() {
-        document.getElementById('generateButton').onclick = function() {
-            generate();
-        };
-        generate();
+    window.requestAnimFrame = (function(){
+      return  window.requestAnimationFrame       ||
+              window.webkitRequestAnimationFrame ||
+              window.mozRequestAnimationFrame    ||
+              function( callback ){
+                window.setTimeout(callback, 1000);
+              };
+    })();
+
+    var i = 1;
+    var canvasS = parseInt(document.getElementById('canvasSize').value);
+    
+    var sizeInit =function () {
+        canvasS = parseInt(document.getElementById('canvasSize').value);
+        canvas = doc.getElementById("canvas");
+        resolution = 12;
+        var canvasSize = Math.floor(Math.sqrt(canvasS, 10));
+        canvas.width = (canvasSize * resolution);
+        canvas.height = canvas.width;
+        width = parseInt(canvas.width, 10);
+        height = parseInt(canvas.height, 10)
+        context = canvas.getContext("2d");
     };
+    sizeInit();
+
+    document.getElementById('canvasSize').onchange = sizeInit;
+    divisor = document.getElementById('divisor').value;
+    document.getElementById('divisor').onchange = function () {
+        divisor = this.value;
+    };
+
+    var radiusP = document.getElementById('size').checked;
+    var alphaP = document.getElementById('alpha').checked;
+
+    document.getElementById('size').onchange = function () {
+        if (this.checked) {
+            radiusP = true;
+        } else {
+            radiusP = false;
+        }
+    };
+    document.getElementById('alpha').onchange = function () {
+        if (this.checked) {
+            alphaP = true;
+        } else {
+            alphaP = false;
+        }
+    };
+
+    (function animloop(){
+      generate(i++, divisor);
+      requestAnimFrame(animloop);
+    })();
 
 })(window, document, navigator);
 
+    var mobiusCache = {};
+
     var mobiusFunc = function(num) {
+        if (num in mobiusCache) {
+            return mobiusCache[num];
+        }
         var factors = factor(num);
         var unique  = factors.filter(function(itm,i,a){
-            return i==a.indexOf(itm);
+            return mobiusCache[num] = ( i==a.indexOf(itm) );
         });
         if (factors.length !== unique.length) {
-            return [factors, 0];
+            return mobiusCache[num] = [factors, 0];
         } else if(!!(num && !(num%2))) {
-            return [factors, 1];
+            return mobiusCache[num] = [factors, 1];
         } else {
-            return [factors, -1];
+            return mobiusCache[num] = [factors, -1];
         }
     }
 

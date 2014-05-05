@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title></title>
+        <title>Ulam Revenge</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="css/style.css" />
     </head>
     <body>
-            <label>Points <input type="text" value="5000" id="canvasSize"/></label>
-            <button class="btn btn-inverse" id="generateButton">
-                Submit
-            </button>
-        </fieldset>
+        <form>
+        <input type=hidden id="size">
+        <input type=hidden id="alpha">
+        <input type=hidden id="spin">
+        <pre>red:   mu == -1   |   Canvas size.........<input type="text" value="400" id="canvasSize" size=5/>
+blue:  mu ==  1   |   Dot size............<input type=counter id="divisor" value="4" size=1/>
+green: mu ==  0   |   
+black: prime      |   Experiment with small increases! 
+
         <canvas class="canvas" id="canvas"></canvas>
-    <script src="js/riemann.js"></script>
-    <script src="js/math/combinatoric.js"></script>
-    <script src="js/math/complex.js"></script>
-    <script src="js/math/zeta.js"></script>
+        </pre>
+        </form>
 
         <script src="js/app.js"></script>
     </body>
