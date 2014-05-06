@@ -313,10 +313,19 @@
         e.preventDefault();
     };
     document.getElementById('stop').onclick = function (e) {
+        stop = true;
+        e.preventDefault();
+    };
+    document.getElementById('next').onclick = function (e) {
         generate(++start, divisor);
         stop = true;
         e.preventDefault();
     };
-    generate(++start, divisor);
+    document.getElementById('prev').onclick = function (e) {
+        generate(--start, divisor);
+        stop = true;
+        e.preventDefault();
+    };
+    generate(start, divisor);
 
 })(window, document, navigator);
