@@ -13,25 +13,23 @@
                              Prime Spiral Generator     /___/
  </small></pre></h1>
         <form>
-        <input type=hidden id="size" checked>
-        <input type=hidden id="alpha" checked>
-        <input type=hidden id="spin">
-<pre>Numbers     <input type=number value="400" id="canvasSize"/> (change restarts)
-Start       <input type=number id="start" value="-200"/> (change restarts)
-Dots/number <input type=number id="divisor" value="4" />  <button id="anim">Start</button> <button id="stop">Stop</button>
-
-Caution: Experiment with small increases! </pre>
+<pre>Numbers:     <input type=number value="120" id="canvasSize"/> (change restarts)
+Start:       <input type=number id="start" value="30"/> (change restarts)
+Dots/number: <input type=number id="divisor" value="4" />  <button id="anim">Start</button> <button id="stop">Stop</button>
+</pre>
         </form>
 <canvas class="canvas" id="canvas"></canvas>
 <pre>
-Black:        zero or one
-White:        prime
-Red:          odd unique factors    
-Blue:         even unique factors   
-Green:        no unique factors   
-Light Colors: 2 distinct prime factors
-Borders:      3 distinct prime factors
-<small>(For negative numbers, consider the absolute value)</small></pre>
+      <span style="font-style: italic">White</span>:  prime
+      <span style="font-weight: bold">Black</span>:  zero or one
+      <span style="color: #AA0000; font-weight: bold">Red</span>:    odd unique factors    
+      <span style="color: #0000AA; font-weight: bold">Blue</span>:   even unique factors   
+      <span style="color: #00AA00; font-weight: bold">Green</span>:  no unique factors   
+
+<span style="color: white; background: #A00;">&#8226;</span> Color dot:  distinct prime factors
+<span style="color: #000; background: #FFF;">&#8226;</span> Black dot:  n^2 + n + 41 (Euler's)
+<small>
+Be careful with browser performance.</small></pre>
         <script src="js/app.js"></script>
         <address>by <a href="http://gaigalas">Alexandre Gaigalas</a>, code derived from
         <a href="https://github.com/ejci/Ulam-spiral">Miroslav Magda's Javascript implementation</a> of the <a href="http://en.wikipedia.org/wiki/Ulam_spiral">Ulam Spiral</a>.</address>

@@ -1,5 +1,6 @@
 "use strict";
 
+// Sorry, no refactor yet =(
 
     var mobiusCache = {};
 
@@ -120,10 +121,11 @@
             var directionIndex = 0;
             var i = num;
             var cont = true;
+            var theta = (1/divisor);
             do {
                 for (var k = 0; k < 2; k++) {
                     for (var ds = 0; ds < directionSteps; ds += 1) {
-                        i = i+1/divisor;
+                        i = i + theta;
                         if (i>0) {
                             var stepI = Math.floor(i);
                         } else {
@@ -134,16 +136,17 @@
                         var computedAlpha = 0.5;
                         var computedRadius = 6.22;
                         var pointToDraw = {};
+                        var mu = mobiusFunc(stepI);
+
                         if (stepI==0 || stepI==1) {
                             drawPoint({
                                 x : point.x,
                                 y : point.y,
-                                color : 'rgba(0, 0, 0, '+ computedAlpha +')',
+                                color : 'rgba(0, 0, 0, 0)',
                                 radius : computedRadius
                             });
                             continue;
                         }
-                        var mu = mobiusFunc(stepI);
 
                         if (mu[1] === -1) {  // red odd unique factors
                             pointToDraw = {
@@ -190,8 +193,8 @@
                             drawPoint({
                                 x : point.x,
                                 y : point.y,
-                                color : 'rgba(255, 255, 255, '+ computedAlpha +')',
-                                radius : computedRadius
+                                color : 'rgba(255, 255, 255, 1)',
+                                radius : 2
                             });
                         } else if (mu[0].length == 3 
                             && mobiusFunc(mu[0][0])[0].length ==1
@@ -203,13 +206,25 @@
                             drawPoint({
                                 x : point.x,
                                 y : point.y,
-                                color : 'rgba(255, 255, 255, '+ computedAlpha +')',
-                                radius : computedRadius / 2
+                                color : 'rgba(255, 255, 255, 1)',
+                                radius : 2
                             });
                         }
 
 
                         drawPoint(pointToDraw);
+
+                        if (-1 !== [
+                            // Euler
+                            41, 43, 47, 53, 61, 71, 83, 97, 113, 131, 151, 173, 197, 223, 251, 281, 313, 347, 383, 421, 461, 503, 547, 593, 641, 691, 743, 797, 853, 911, 971, 1033, 1097, 1163, 1231, 1301, 1373, 1447, 1523, 1601, 1847, 1933, 2111, 2203, 2297, 2393, 2591, 2693, 2797
+                            ].indexOf(Math.abs(stepI))) {
+                            drawPoint({
+                                x : point.x,
+                                y : point.y,
+                                color : 'rgba(0, 0, 0, 1)',
+                                radius : 3
+                            });
+                        }
 
                         if (i >= (radiusPow)) {
                             cont = false;
@@ -269,7 +284,7 @@
         canvas = doc.getElementById("canvas");
         resolution = 12;
         var canvasSize = Math.floor(Math.sqrt(canvasS, 10));
-        canvas.width = (canvasSize * resolution);
+        canvas.width = (canvasSize * resolution * divisor);
         canvas.height = canvas.width;
         width = parseInt(canvas.width, 10);
         height = parseInt(canvas.height, 10)
@@ -280,25 +295,8 @@
 
     document.getElementById('canvasSize').onchange = sizeInit;
 
-    var radiusP = document.getElementById('size').checked;
-    var alphaP = document.getElementById('alpha').checked;
-
-    document.getElementById('size').onchange = function () {
-        if (this.checked) {
-            radiusP = true;
-        } else {
-            radiusP = false;
-        }
-    };
     document.getElementById('start').onchange = function () {
         start = this.value;
-    };
-    document.getElementById('alpha').onchange = function () {
-        if (this.checked) {
-            alphaP = true;
-        } else {
-            alphaP = false;
-        }
     };
     var stop = false;
 
