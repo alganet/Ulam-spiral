@@ -295,9 +295,6 @@
 
     document.getElementById('canvasSize').onchange = sizeInit;
 
-    document.getElementById('start').onchange = function () {
-        start = this.value;
-    };
     var stop = false;
 
     function animloop(){
@@ -309,6 +306,7 @@
 
     document.getElementById('anim').onclick = function (e) {
         stop = false;
+        start-=1;
         animloop();
         e.preventDefault();
     };

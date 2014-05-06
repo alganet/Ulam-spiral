@@ -12,21 +12,21 @@
 \____//_/ \_,_//_/_/_/ /___/ /_/|_| \__/ |___/ \__//_//_/\_, / \__/ 
                              Prime Spiral Generator     /___/
  </small></pre></h1>
-        <form><pre><button id="prev">Prev</button> <button id="anim">Start</button> <button id="stop">Stop</button> <button id="next">Next</button> 
+        <form><pre><button id="prev">Prev</button> <button id="anim">Play</button> <button id="stop">Stop</button> <button id="next">Next</button> 
 
-Numbers:     <input type=number value="120" id="canvasSize"/> (change restarts)
-Start:       <input type=number id="start" value="30"/> (change restarts)
-Dots/number: <input type=number id="divisor" value="4" />  
+
+Numbers:         <input type=number value="120" id="canvasSize"/>
+Start from :     <input type=number id="start" value="30"/>
+Dots per number: <input type=number id="divisor" value="4" />  
 </pre>
         </form>
 <canvas class="canvas" id="canvas"></canvas>
 <pre>
-      <span style="font-style: italic">White</span>:  prime
-      <span style="font-weight: bold">Black</span>:  zero or one
-      <span style="color: #AA0000; font-weight: bold">Red</span>:    odd unique factors    
-      <span style="color: #0000AA; font-weight: bold">Blue</span>:   even unique factors   
-      <span style="color: #00AA00; font-weight: bold">Green</span>:  no unique factors   
-
+    <span style="font-weight: bold">Black</span>:  numer zero or one
+    <span style="font-style: italic">White</span>:  prime number
+    <span style="color: #AA0000; font-weight: bold">Red</span>:    odd unique factors    
+    <span style="color: #0000AA; font-weight: bold">Blue</span>:   even unique factors   
+    <span style="color: #00AA00; font-weight: bold">Green</span>:  no unique factors   
 <span style="color: white; background: #A00;">&#8226;</span> Color dot:  distinct prime factors
 <span style="color: #000; background: #FFF;">&#8226;</span> Black dot:  n^2 + n + 41 (Euler's)
 <small>
