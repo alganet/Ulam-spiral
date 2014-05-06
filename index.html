@@ -1,24 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Ulam Revenge</title>
+        <title>Ulam's Revenge</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="css/style.css" />
     </head>
     <body>
         <form>
-        <input type=hidden id="size">
-        <input type=hidden id="alpha">
+        <input type=hidden id="size" checked>
+        <input type=hidden id="alpha" checked>
         <input type=hidden id="spin">
-        <pre>red:   mu == -1   |   Canvas size.........<input type="text" value="400" id="canvasSize" size=5/>
-blue:  mu ==  1   |   Dot size............<input type=counter id="divisor" value="4" size=1/>
-green: mu ==  0   |   
-black: prime      |   Experiment with small increases! 
+<pre><small>  __  __ __            _        ___           
+ / / / // /___ _ __ _ ( )___   / _ \ ___  _  __ ___  ___  ___ _ ___ 
+/ /_/ // // _ `//  ' \|/(_-<  / , _// -_)| |/ // -_)/ _ \/ _ `// -_)
+\____//_/ \_,_//_/_/_/ /___/ /_/|_| \__/ |___/ \__//_//_/\_, / \__/ 
+                                                        /___/      
 
-        <canvas class="canvas" id="canvas"></canvas>
-        </pre>
+                                            A prime spiral generator</small>
+
+Canvas size........<input type="text" value="400" id="canvasSize" size=3/>
+Dots per integer...<input type=counter id="divisor" value="4" size=1/>
+Start number.......<input type=counter id="start" value="-200" size=5/>
+<button id="anim">Animate</button> Caution: Experiment with small increases! 
+
+<strong>Legend</strong>
+Black:        zero or one
+White:        prime
+Red:          odd unique factors    
+Blue:         even unique factors   
+Green:        no unique factors   
+Light Colors: 2 distinct prime factors
+Borders:      3 distinct prime factors
+<small>(For negative numbers, consider the modulus)</small></pre>
         </form>
-
+<canvas class="canvas" id="canvas"></canvas>
         <script src="js/app.js"></script>
     </body>
 </html>
