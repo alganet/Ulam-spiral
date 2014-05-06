@@ -6,24 +6,24 @@
         <link rel="stylesheet" href="css/style.css" />
     </head>
     <body>
+<h1><pre><small>  __  __ __            _        ___           
+ / / / // /___ _ __ _ ( )___   / _ \ ___  _  __ ___  ___  ___ _ ___ 
+/ /_/ // // _ `//  ' \|/(_-<  / , _// -_)| |/ // -_)/ _ \/ _ `// -_)
+\____//_/ \_,_//_/_/_/ /___/ /_/|_| \__/ |___/ \__//_//_/\_, / \__/ 
+                             Prime Spiral Generator     /___/
+ </small></pre></h1>
         <form>
         <input type=hidden id="size" checked>
         <input type=hidden id="alpha" checked>
         <input type=hidden id="spin">
-<pre><small>  __  __ __            _        ___           
- / / / // /___ _ __ _ ( )___   / _ \ ___  _  __ ___  ___  ___ _ ___ 
-/ /_/ // // _ `//  ' \|/(_-<  / , _// -_)| |/ // -_)/ _ \/ _ `// -_)
-\____//_/ \_,_//_/_/_/ /___/ /_/|_| \__/ |___/ \__//_//_/\_, / \__/ 
-                                                        /___/      
+<pre>Numbers     <input type=number value="400" id="canvasSize"/> (change restarts)
+Start       <input type=number id="start" value="-200"/> (change restarts)
+Dots/number <input type=number id="divisor" value="4" />  <button id="anim">Start</button> <button id="stop">Stop</button>
 
-                                            A prime spiral generator</small>
-
-Canvas size........<input type="text" value="400" id="canvasSize" size=3/>
-Dots per integer...<input type=counter id="divisor" value="4" size=1/>
-Start number.......<input type=counter id="start" value="-200" size=5/>
-<button id="anim">Animate</button> Caution: Experiment with small increases! 
-
-<strong>Legend</strong>
+Caution: Experiment with small increases! </pre>
+        </form>
+<canvas class="canvas" id="canvas"></canvas>
+<pre>
 Black:        zero or one
 White:        prime
 Red:          odd unique factors    
@@ -31,9 +31,9 @@ Blue:         even unique factors
 Green:        no unique factors   
 Light Colors: 2 distinct prime factors
 Borders:      3 distinct prime factors
-<small>(For negative numbers, consider the modulus)</small></pre>
-        </form>
-<canvas class="canvas" id="canvas"></canvas>
+<small>(For negative numbers, consider the absolute value)</small></pre>
         <script src="js/app.js"></script>
+        <address>by <a href="http://gaigalas">Alexandre Gaigalas</a>, code derived from
+        <a href="https://github.com/ejci/Ulam-spiral">Miroslav Magda's Javascript implementation</a> of the <a href="http://en.wikipedia.org/wiki/Ulam_spiral">Ulam Spiral</a>.</address>
     </body>
 </html>

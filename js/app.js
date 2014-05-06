@@ -132,7 +132,7 @@
                         point = setDirection(point, directionIndex);
 
                         var computedAlpha = 0.5;
-                        var computedRadius = 6;
+                        var computedRadius = 6.22;
                         var pointToDraw = {};
                         if (stepI==0 || stepI==1) {
                             drawPoint({
@@ -181,6 +181,7 @@
                             }
                         } 
 
+
                         
                         if (mu[0].length == 2 // two factors, semi primes
                             && mobiusFunc(mu[0][0])[0].length ==1
@@ -206,6 +207,7 @@
                                 radius : computedRadius / 2
                             });
                         }
+
 
                         drawPoint(pointToDraw);
 
@@ -298,17 +300,25 @@
             alphaP = false;
         }
     };
+    var stop = false;
 
     function animloop(){
-      if (start <= canvasS) {
+      if (!stop && start <= canvasS) {
         generate(++start, divisor);
         requestAnimFrame(animloop);
       }
     };
 
     document.getElementById('anim').onclick = function (e) {
+        stop = false;
         animloop();
         e.preventDefault();
     };
+    document.getElementById('stop').onclick = function (e) {
+        generate(++start, divisor);
+        stop = true;
+        e.preventDefault();
+    };
+    generate(++start, divisor);
 
 })(window, document, navigator);

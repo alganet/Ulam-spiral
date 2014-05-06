@@ -426,18 +426,42 @@ th {
 
 canvas {
 	border: 2px solid black;
-	margin: 0 auto;
-	width: 80%;
+	max-width: 50%;
+	width: auto;
+	display: block;
+	float: right;
+}
+
+h1, address {
+	clear: both;
+}
+
+address {
+	line-height: 3em;
+	text-align: center;
 	display: block;
 }
 
 pre {
 	font-size: 0.9em;
+    float: left;
+    width: 47%;
+}
+
+h1, h1 pre {
+	font-size: 1.2em;
+	font-weight: normal;
+	width: auto;
+	margin: 0.2em auto;
 }
 
 body {
 	padding-bottom: 3em;
-	width: 35em;
+	width: 50em;
 	margin: 0 auto;
-	font-size: 11pt;
+	font-size: 10pt;
+}
+
+input {
+	width: 5em;
 }
