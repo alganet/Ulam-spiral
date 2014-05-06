@@ -14,7 +14,7 @@
         });
         if (factors.length !== unique.length) {
             return mobiusCache[num] = [factors, 0];
-        } else if(!!(num && !(num%2))) {
+        } else if(!!(factors.length && !(factors.length%2))) {
             return mobiusCache[num] = [factors, 1];
         } else {
             return mobiusCache[num] = [factors, -1];
@@ -132,7 +132,7 @@
                         point = setDirection(point, directionIndex);
 
                         var computedAlpha = 0.5;
-                        var computedRadius = 7;
+                        var computedRadius = 6;
                         var pointToDraw = {};
                         if (stepI==0 || stepI==1) {
                             drawPoint({
@@ -184,17 +184,21 @@
                         
                         if (mu[0].length == 2 // two factors, semi primes
                             && mobiusFunc(mu[0][0])[0].length ==1
-                            && mobiusFunc(mu[0][1])[0].length ==1) {
+                            && mobiusFunc(mu[0][1])[0].length ==1
+                            && mobiusFunc(mu[0][0])[0] != mobiusFunc(mu[0][1])[0]) {
                             drawPoint({
                                 x : point.x,
                                 y : point.y,
                                 color : 'rgba(255, 255, 255, '+ computedAlpha +')',
                                 radius : computedRadius
                             });
-                        } else if (mu[0].length == 3 // two factors, semi primes
+                        } else if (mu[0].length == 3 
                             && mobiusFunc(mu[0][0])[0].length ==1
                             && mobiusFunc(mu[0][1])[0].length ==1
-                            && mobiusFunc(mu[0][2])[0].length ==1) {
+                            && mobiusFunc(mu[0][2])[0].length ==1
+                            && mobiusFunc(mu[0][0])[0] != mobiusFunc(mu[0][1])[0]
+                            && mobiusFunc(mu[0][1])[0] != mobiusFunc(mu[0][2])[0]
+                            && mobiusFunc(mu[0][0])[0] != mobiusFunc(mu[0][2])[0]) {
                             drawPoint({
                                 x : point.x,
                                 y : point.y,
